@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
 interface IStudent {
-  id?: number;
+  id: number;
   firstName: string;
   lastName: string;
   course: string;
+  editMode: boolean;
 }
-
 @Component({
   selector: 'main-content',
   templateUrl: './main-content.component.html',
@@ -14,47 +14,58 @@ interface IStudent {
 })
 export class MainContentComponent implements OnInit {
 
-  students: Array<IStudent> = [];
+  studentArray: Array<IStudent> = [];
+  disableAddButton = false;
+  constructor() { }
 
-  constructor() {
-    this.students[0] = {
-      id: 1,
-      firstName: 'Juan',
-      lastName: 'Laredo',
-      course: 'Programming'
-    }
-    this.students[1] = {
-      id: 1,
-      firstName: 'Tom',
-      lastName: 'Brady',
-      course: 'Football'
-    }
-    this.students[2] = {
-      id: 1,
-      firstName: 'Mark',
-      lastName: 'Zuc',
-      course: 'Business'
-    }
-    this.students[3] = {
-      id: 1,
-      firstName: 'Joe',
-      lastName: 'Biden',
-      course: 'Politics'
-    }
-  }
-
-  ngOnInit(): void {
+  ngOnInit() {
+    this.studentArray = [
+      {
+        id: 1,
+        firstName: 'Juan',
+        lastName: 'Laredo',
+        course: 'Programming',
+        editMode: false
+      },
+      {
+        id: 2,
+        firstName: 'Steve',
+        lastName: 'Wonder',
+        course: 'Singer',
+        editMode: false
+      },
+      {
+        id: 3,
+        firstName: 'Dave',
+        lastName: 'Chappelle',
+        course: 'Comedian',
+        editMode: false
+      },
+    ];
   }
 
   addStudent() {
-    const student: IStudent = {
-      id: 1,
-      firstName: 'Robert',
-      lastName: 'Deniro',
-      course: 'Movies'
-    };
-
-    this.students.push(student);
+    this.studentArray.unshift({
+      id: null,
+      firstName: null,
+      lastName: null,
+      course: null,
+      editMode: true
+    });
+    this.disableAddButton = true;
   }
-
+  removeStudent(index: number) {
+    console.log('index ---->', index);
+    this.studentArray.splice(index, 1);
+  }
+  saveStudent() {
+    this.studentArray[0].editMode = false;
+    this.disableAddButton = false;
+    this.sort('asc');
+  }
+  sort(direction: string) {
+    this.studentArray.sort((a: IStudent, b: IStudent, ) => {
+      return a.id > b.id ? -1 : 1;
+    });
+  }
 }

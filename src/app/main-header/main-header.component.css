@@ -2,5 +2,5 @@
         background-color: rgb(235, 228, 228);
         display: grid;
         grid-template-columns: 1fr 6fr 2fr;
-        height: 50%;
+        height: 100%;
     }
